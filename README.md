@@ -26,10 +26,19 @@ This package provides a libfast-mktime.so.1, defining only mktime()
 and intended to be interpose system mktime() as above, using
 LD_PRELOAD.
 
-Platforms
----------
+Platforms Tested
+----------------
 
-So far, tested on i686 and x86_64 GNU/Linux.
+Please let me know if something else works.
+
+<blockquote>
+<table width="40%">
+  <tr align="left"><th> Platform  <th> GCC   <th> Benchmark </tr>
+  <tr><td> i686 GNU/Linux         <td> 4.6.3 <td> ~86x </tr>
+  <tr><td> x86_64 GNU/Linux       <td> 4.6.3 <td> ~86x </tr>
+  <tr><td> sun4v Solaris sparc VM <td> 4.0.2 <td> ~10x </tr>
+</table>
+</blockquote>
 
 Building
 --------
