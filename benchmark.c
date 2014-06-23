@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2014 Mitchell Perilstein
+ * Licensed under GNU LGPL Version 3. See LICENSING file for details.
+ */
+
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -15,14 +20,14 @@ struct tm * makeit(long ndates)
     struct tm * date_array = (struct tm *)malloc(ndates * sizeof(struct tm));
     if (!date_array)
     {
-	fprintf(stderr, "Too much malloc\n");
-	exit(1);
+        fprintf(stderr, "Too much malloc\n");
+        exit(1);
     }
 
     long s;
     for (s=0; s<ndates; s++)
     {
-        time_t t = s + 1;	// start at year 1
+        time_t t = s + 1;       // start at year 1
         gmtime_r(&t, &date_array[s]);
     }
 
@@ -37,24 +42,24 @@ float timeit(struct tm *dates, long ndates)
     long s;
     for (s=0; s<ndates; s++)
     {
-        time_t made = mktime(&dates[s]);      
+        time_t made = mktime(&dates[s]);
     }
 
     gettimeofday(&tend, NULL);
     return ((tend.tv_sec * 1e6 + tend.tv_usec)
-	- (tbeg.tv_sec * 1e6 + tbeg.tv_usec)) / 1e6;
+            - (tbeg.tv_sec * 1e6 + tbeg.tv_usec)) / 1e6;
 }
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
-    if (argc < 3) 
-	usage();
+    if (argc < 3)
+        usage();
 
     long trials = atol(argv[1]);
     long ndates = atol(argv[2]);
 
     if (ndates<1 || trials<1)
-	usage();
+        usage();
 
     struct tm *dates = makeit(ndates);
     float total      = 0.0;
@@ -63,7 +68,7 @@ int main(int argc, char **argv)
     for (i=0; i<trials; i++)
     {
         float secs = timeit(dates, ndates);
-	printf("%3d: %f s\n", (int)i, secs);
+        printf("%3d: %f s\n", (int)i, secs);
         total += secs;
     }
 

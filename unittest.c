@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2014 Mitchell Perilstein
+ * Licensed under GNU LGPL Version 3. See LICENSING file for details.
+ */
+
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -6,23 +11,23 @@
 #include <assert.h>
 
 void ok(int sec, int min, int hour, int day, int month, int year,
-	time_t expect, const char *title)
+        time_t expect, const char *title)
 {
     struct tm s;
-    s.tm_sec = sec;  
-    s.tm_min = min;  
+    s.tm_sec = sec;
+    s.tm_min = min;
     s.tm_hour = hour;
-    s.tm_mday = day; 
-    s.tm_mon = month;  
+    s.tm_mday = day;
+    s.tm_mon = month;
     s.tm_year = year;
     s.tm_isdst = 0;
 
     time_t result = mktime(&s);
 
-    printf("  %s: got %10d for %s\n", 
-	(result == expect ? "okay" : "fail"), 
-	result,
-	title);
+    printf("  %s: got %10lu for %s\n",
+           (result == expect ? "okay" : "fail"),
+           (unsigned long)result,
+           title);
 }
 
 int main()

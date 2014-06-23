@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2014 Mitchell Perilstein
+ * Licensed under GNU LGPL Version 3. See LICENSING file for details.
+ */
+
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,14 +21,14 @@ time_t mktime(struct tm *tm)
     /* Load real mktime once into a static */
     if (!mktime_real)
     {
-	void *handle;
+        void *handle;
 
-	/* To forgive this cast, please see man dlopen(3). */
-	dlerror();
-	handle = dlsym(RTLD_NEXT, "mktime");
-	*(void **) (&mktime_real) = handle;
+        /* To forgive this cast, please see man dlopen(3). */
+        dlerror();
+        handle = dlsym(RTLD_NEXT, "mktime");
+        *(void **) (&mktime_real) = handle;
 
-	if (!mktime_real) 
+        if (!mktime_real)
         {
             fprintf(stderr, "loading mktime: %s\n", dlerror());
             exit(EXIT_FAILURE);
@@ -31,12 +36,12 @@ time_t mktime(struct tm *tm)
     }
 
     /* the epoch time portion of the request */
-    hmsarg = 3600 * tm->tm_hour 
-	    +  60 * tm->tm_min 
+    hmsarg = 3600 * tm->tm_hour
+            +  60 * tm->tm_min
             +       tm->tm_sec;
 
-    if ( cache.tm_mday    == tm->tm_mday 
-         && cache.tm_mon  == tm->tm_mon 
+    if ( cache.tm_mday    == tm->tm_mday
+         && cache.tm_mon  == tm->tm_mon
          && cache.tm_year == tm->tm_year )
     {
         /* cached - just add h,m,s from request to midnight */

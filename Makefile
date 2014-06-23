@@ -3,6 +3,9 @@
 #
 # Usage:  make [test|bench|clean]
 #
+# Copyright (C) 2014 Mitchell Perilstein
+# Licensed under GNU LGPL Version 3. See LICENSING file for details.
+#
 
 LIB   = libfast-mktime.so.1
 ALL   = $(LIB) benchmark unittest
@@ -20,7 +23,7 @@ test: $(ALL)
 	./unittest 
 	@echo
 	LD_PRELOAD=./$(LIB) ./unittest
-	
+
 bench:
 	@echo
 	@echo '## Benchmarking once with stock mktime and once with wrapper.'
@@ -29,6 +32,6 @@ bench:
 	./benchmark 3 1000000
 	@echo
 	LD_PRELOAD=./$(LIB) ./benchmark 3 1000000
-	
+
 clean:
 	@rm -f $(ALL)
