@@ -2,7 +2,7 @@ libfast-mktime
 ==============
 
 This is a micro-optimization for mktime(3) that will speed it up
-around 86x in the best case and have a slight impact in the worse.
+around 10x to 86x in the best case and have a slight impact in the worse.
 
 Motivation
 ----------
@@ -12,6 +12,9 @@ normalization, plus the obvious date calculations, all of which can
 take some cycles.  If your use case entails many mktime() calls within
 the same calendar day, there is an easy optimization which can show
 substantial savings.
+
+A common use case would be parsing a large log file with many timestamps in the same
+day and you would like to store the timestamps in epoch time.
 
 Algorithm
 ---------
