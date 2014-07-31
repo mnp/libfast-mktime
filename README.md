@@ -16,6 +16,11 @@ substantial savings.
 A common use case would be parsing a large log file with many timestamps in the same
 day and you would like to store the timestamps in epoch time.
 
+Caveats
+-------
+1. This hack is not thread safe.
+2. It does not check if the caller has switched timezones using tzset.
+
 Algorithm
 ---------
 
