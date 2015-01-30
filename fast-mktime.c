@@ -46,6 +46,16 @@ time_t mktime(struct tm *tm)
     {
         /* cached - just add h,m,s from request to midnight */
         result = time_cache + hmsarg;
+
+        /* Obscure, but documented, return value: only this value in arg struct.         
+         * 
+         * BUG: dst switchover was computed by mktime_real() for time 00:00:00
+         * of arg day. So this return value WILL be wrong for switchover days
+         * after the switchover occurs.  There is no clean way to detect this
+         * situation in stock glibc.  This bug will be reflected in unit test
+         * until fixed.  See also github issues #1 and #2.
+         */
+        tm->tm_isdst  = cache.tm_isdst;
     }
     else
     {
@@ -54,6 +64,7 @@ time_t mktime(struct tm *tm)
         cache.tm_mon  = tm->tm_mon;
         cache.tm_year = tm->tm_year;
         time_cache    = mktime_real(&cache);
+        tm->tm_isdst  = cache.tm_isdst;
 
         result = (-1 == time_cache) ? -1 : time_cache + hmsarg;
     }
